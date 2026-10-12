@@ -1,427 +1,79 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>شارژ یار - مدیریت هوشمند ساختمان</title>
-<style>
-  :root {
-    --primary: #0d3b2e;
-    --primary-light: #165b47;
-    --gold: #d4af37;
-    --gold-light: #f7e7a9;
-    --bg: #f4f7f5;
-    --card: #ffffff;
-    --text: #222222;
-    --muted: #666666;
-    --danger: #d9534f;
-    --success: #28a745;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, 'Vazirmatn', sans-serif; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: var(--text); padding-bottom: 75px; direction: rtl; }
-  header { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; padding: 18px 16px; text-align: center; border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-  header h1 { font-size: 1.25rem; font-weight: bold; color: var(--gold-light); display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .container { max-width: 600px; margin: 0 auto; padding: 14px; }
-  
-  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
-  .stat-card { background: var(--card); border-radius: 12px; padding: 12px; text-align: center; border-right: 4px solid var(--gold); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-  .stat-card.danger { border-right-color: var(--danger); }
-  .stat-card.success { border-right-color: var(--success); }
-  .stat-title { font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
-  .stat-val { font-size: 1.05rem; font-weight: bold; color: var(--primary); }
-
-  .card { background: var(--card); border-radius: 14px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .card-title { font-size: 1rem; font-weight: bold; color: var(--primary); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #eee; padding-bottom: 8px; }
-
-  label { display: block; font-size: 0.82rem; font-weight: bold; margin-bottom: 5px; color: #444; }
-  input, select, textarea { width: 100%; padding: 10px 12px; border: 1.5px solid #dcdcdc; border-radius: 8px; font-size: 0.9rem; margin-bottom: 12px; outline: none; background: #fafafa; }
-  input:focus, select:focus, textarea:focus { border-color: var(--gold); background: #fff; }
-
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 9px; font-size: 0.95rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
-  .btn:active { transform: scale(0.98); background: var(--primary-light); }
-  .btn-gold { background: linear-gradient(135deg, var(--gold), #b8972b); color: #111; }
-  .btn-sm { padding: 6px 10px; font-size: 0.78rem; width: auto; border-radius: 6px; }
-  .btn-danger { background: var(--danger); }
-
-  .list-item { background: #fafbfc; border: 1px solid #eef0f2; border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 6px; }
-  .item-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
-  .badge { padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
-  .badge-debt { background: #ffebee; color: var(--danger); }
-  .badge-ok { background: #e8f5e9; color: var(--success); }
-
-  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #ddd; display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; box-shadow: 0 -3px 10px rgba(0,0,0,0.05); }
-  .nav-btn { background: none; border: none; font-size: 0.75rem; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; width: 20%; }
-  .nav-btn.active { color: var(--primary); font-weight: bold; }
-  .nav-icon { font-size: 1.25rem; }
-
-  .view { display: none; }
-  .view.active { display: block; }
-
-  .actions-row { display: flex; gap: 6px; margin-top: 8px; }
-  .empty { text-align: center; color: #999; font-size: 0.85rem; padding: 25px 0; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شارژ یار - مدیریت شارژ ساختمان</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #082618;
+            text-align: center;
+            font-size: 22px;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .myket-box {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .btn-myket {
+            display: block;
+            padding: 15px;
+            background: #d4af37;
+            color: #082618;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .btn-dev {
+            display: block;
+            padding: 15px;
+            background: #082618;
+            color: #d4af37;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            border: 1px solid #d4af37;
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <h1>🏢 شارژ یار</h1>
-</header>
-
-<div class="container">
-
-  <!-- نما ۱: پیشخوان -->
-  <div id="view-dashboard" class="view active">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-title">تعداد واحدها</div>
-        <div class="stat-val" id="stat-units">۰</div>
-      </div>
-      <div class="stat-card success">
-        <div class="stat-title">موجودی صندوق</div>
-        <div class="stat-val" id="stat-balance">۰ تومان</div>
-      </div>
-      <div class="stat-card danger">
-        <div class="stat-title">مجموع بدهی واحدها</div>
-        <div class="stat-val" id="stat-debt">۰ تومان</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-title">مجموع هزینه‌ها</div>
-        <div class="stat-val" id="stat-expenses">۰ تومان</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">⚡ ثبت سریع پرداختی شارژ</div>
-      <label>انتخاب واحد</label>
-      <select id="quick-unit"></select>
-      <label>مبلغ واریز (تومان)</label>
-      <input type="number" id="quick-pay-amount" placeholder="مثلاً: ۱۵۰۰۰۰">
-      <label>شماره پیگیری / توضیحات</label>
-      <input type="text" id="quick-pay-desc" placeholder="اختیاری">
-      <button class="btn btn-gold" onclick="addPaymentQuick()">ثبت دریافت شارژ</button>
-    </div>
-  </div>
-
-  <!-- نما ۲: واحدها -->
-  <div id="view-units" class="view">
-    <div class="card">
-      <div class="card-title">➕ افزودن واحد جدید</div>
-      <label>شماره واحد</label>
-      <input type="text" id="unit-no" placeholder="مثلاً: واحد ۴">
-      <label>نام ساکن / مالک</label>
-      <input type="text" id="unit-name" placeholder="مثلاً: آقای رضایی">
-      <label>شماره همراه</label>
-      <input type="tel" id="unit-phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹">
-      <label>متراژ (مترمربع) - اختیاری</label>
-      <input type="number" id="unit-area" placeholder="۸۵">
-      <label>تعداد نفرات - اختیاری</label>
-      <input type="number" id="unit-people" placeholder="۳">
-      <button class="btn" onclick="saveUnit()">ثبت واحد</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">📋 لیست واحدهای ساختمان</div>
-      <div id="units-list"></div>
-    </div>
-  </div>
-
-  <!-- نما ۳: صدور شارژ ماهانه -->
-  <div id="view-charge" class="view">
-    <div class="card">
-      <div class="card-title">💰 صدور و محاسبه شارژ ماهانه</div>
-      <label>عنوان دوره</label>
-      <input type="text" id="charge-period" placeholder="مثلاً: شارژ مهر ۱۴۰۳">
-      
-      <label>نحوه محاسبه</label>
-      <select id="charge-type" onchange="toggleChargeInputs()">
-        <option value="fixed">مبلغ ثابت برای همه واحدها</option>
-        <option value="area">بر اساس متراژ هر واحد</option>
-        <option value="people">بر اساس تعداد نفرات هر واحد</option>
-      </select>
-
-      <div id="charge-fixed-box">
-        <label>مبلغ شارژ هر واحد (تومان)</label>
-        <input type="number" id="charge-fixed-val" placeholder="مثلاً: ۲۰۰۰۰۰">
-      </div>
-
-      <div id="charge-variable-box" style="display:none;">
-        <label>نرخ پایه هر واحد/نفر/متر (تومان)</label>
-        <input type="number" id="charge-rate-val" placeholder="مثلاً: ۳۰۰۰">
-      </div>
-
-      <button class="btn btn-gold" onclick="applyMonthlyCharge()">اعمال و افزودن به بدهی واحدها</button>
-    </div>
-  </div>
-
-  <!-- نما ۴: هزینه‌های ساختمان -->
-  <div id="view-expenses" class="view">
-    <div class="card">
-      <div class="card-title">🧾 ثبت فاکتور و خرج ساختمان</div>
-      <label>عنوان هزینه</label>
-      <input type="text" id="exp-title" placeholder="مثلاً: سرویس آسانسور، نظافت، قبض برق">
-      <label>مبلغ هزینه (تومان)</label>
-      <input type="number" id="exp-amount" placeholder="مثلاً: ۵۰۰۰۰۰">
-      <label>تاریخ / توضیح</label>
-      <input type="text" id="exp-date" placeholder="۱۴۰۳/۰۷/۱۰">
-      <button class="btn btn-danger" onclick="addExpense()">ثبت هزینه (کسر از صندوق)</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">📜 لیست هزینه‌ها</div>
-      <div id="expenses-list"></div>
-    </div>
-  </div>
-
-  <!-- نما ۵: تنظیمات و پیامک -->
-  <div id="view-settings" class="view">
-    <div class="card">
-      <div class="card-title">📤 ارسال صورتحساب به واحدها</div>
-      <label>انتخاب واحد برای صدور پیامک</label>
-      <select id="sms-unit-select" onchange="generateSmsText()"></select>
-      <label>متن آماده پیامک / ایتا / بله:</label>
-      <textarea id="sms-text" rows="5" readonly></textarea>
-      <button class="btn btn-gold" onclick="copySmsText()">کپی متن برای ارسال</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">💾 پشتیبان‌گیری آفلاین</div>
-      <button class="btn" onclick="exportData()" style="margin-bottom:8px;">دانلود نسخه پشتیبان (JSON)</button>
-      <button class="btn btn-danger" onclick="clearAllData()">پاک کردن تمام اطلاعات</button>
-    </div>
-  </div>
-
-</div>
-
-<!-- منوی پایین -->
-<div class="bottom-nav">
-  <button class="nav-btn active" onclick="switchTab('dashboard')"><span class="nav-icon">📊</span>پیشخوان</button>
-  <button class="nav-btn" onclick="switchTab('units')"><span class="nav-icon">🚪</span>واحدها</button>
-  <button class="nav-btn" onclick="switchTab('charge')"><span class="nav-icon">💳</span>صدور شارژ</button>
-  <button class="nav-btn" onclick="switchTab('expenses')"><span class="nav-icon">🧾</span>هزینه‌ها</button>
-  <button class="nav-btn" onclick="switchTab('settings')"><span class="nav-icon">⚙️</span>ارسال/پشتیبان</button>
-</div>
-
-<script>
-  let db = {
-    units: [],
-    expenses: [],
-    balance: 0
-  };
-
-  function init() {
-    const saved = localStorage.getItem('charge_yar_data');
-    if (saved) {
-      try { db = JSON.parse(saved); } catch(e){}
-    }
-    renderAll();
-  }
-
-  function saveDB() {
-    localStorage.setItem('charge_yar_data', JSON.stringify(db));
-    renderAll();
-  }
-
-  function renderAll() {
-    renderDashboard();
-    renderUnits();
-    renderExpenses();
-    updateUnitSelects();
-  }
-
-  function renderDashboard() {
-    let totalDebt = 0;
-    db.units.forEach(u => { if(u.debt > 0) totalDebt += Number(u.debt); });
-    let totalExp = db.expenses.reduce((s, e) => s + Number(e.amount), 0);
-
-    document.getElementById('stat-units').innerText = db.units.length;
-    document.getElementById('stat-balance').innerText = formatPrice(db.balance);
-    document.getElementById('stat-debt').innerText = formatPrice(totalDebt);
-    document.getElementById('stat-expenses').innerText = formatPrice(totalExp);
-  }
-
-  function renderUnits() {
-    const list = document.getElementById('units-list');
-    if(db.units.length === 0) {
-      list.innerHTML = '<div class="empty">هنوز واحدی ثبت نشده است.</div>';
-      return;
-    }
-    list.innerHTML = db.units.map((u, i) => `
-      <div class="list-item">
-        <div class="item-row">
-          <strong>${u.no} - ${u.name}</strong>
-          <span class="badge ${u.debt > 0 ? 'badge-debt' : 'badge-ok'}">${u.debt > 0 ? 'بدهی: ' + formatPrice(u.debt) : 'تسویه'}</span>
+    <div class="container">
+        <h1>سامانه مدیریت شارژ ساختمان (شارژ یار)</h1>
+        <p>با استفاده از این اپلیکیشن می‌توانید به راحتی هزینه‌ها و شارژ واحدهای ساختمان را مدیریت و پیگیری کنید.</p>
+        
+        <!-- بخش دکمه‌های الزامی مایکت -->
+        <div class="myket-box">
+            <a href="myket://comment?id=co.median.android.rdamaak" class="btn-myket">⭐ ثبت نظر و امتیاز در مایکت</a>
+            <a href="myket://developer/seyedmehdidaavi@gmail.com" class="btn-dev">📂 سایر برنامه‌های من</a>
         </div>
-        <div class="item-row" style="color:#666; font-size:0.75rem;">
-          <span>همراه: ${u.phone || 'ندارد'}</span>
-          <span>${u.area ? u.area + ' متر' : ''} ${u.people ? ' | ' + u.people + ' نفر' : ''}</span>
-        </div>
-        <div class="actions-row">
-          <button class="btn btn-sm btn-danger" onclick="deleteUnit(${i})">حذف</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function renderExpenses() {
-    const list = document.getElementById('expenses-list');
-    if(db.expenses.length === 0) {
-      list.innerHTML = '<div class="empty">هنوز هزینه‌ای ثبت نشده است.</div>';
-      return;
-    }
-    list.innerHTML = db.expenses.map((e, i) => `
-      <div class="list-item">
-        <div class="item-row">
-          <strong>${e.title}</strong>
-          <span style="color:var(--danger); font-weight:bold;">${formatPrice(e.amount)}</span>
-        </div>
-        <div class="item-row" style="color:#888; font-size:0.75rem;">
-          <span>${e.date || 'امروز'}</span>
-          <button class="btn btn-sm btn-danger" onclick="deleteExpense(${i})">حذف</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function updateUnitSelects() {
-    const qSelect = document.getElementById('quick-unit');
-    const sSelect = document.getElementById('sms-unit-select');
-    let opts = db.units.map((u, i) => `<option value="${i}">${u.no} (${u.name})</option>`).join('');
-    if(db.units.length === 0) opts = '<option value="">واحدی وجود ندارد</option>';
-    qSelect.innerHTML = opts;
-    sSelect.innerHTML = opts;
-    generateSmsText();
-  }
-
-  function saveUnit() {
-    const no = document.getElementById('unit-no').value.trim();
-    const name = document.getElementById('unit-name').value.trim();
-    const phone = document.getElementById('unit-phone').value.trim();
-    const area = document.getElementById('unit-area').value;
-    const people = document.getElementById('unit-people').value;
-
-    if(!no || !name) { alert('لطفاً شماره واحد و نام ساکن را وارد کنید.'); return; }
-
-    db.units.push({ no, name, phone, area, people, debt: 0 });
-    saveDB();
-    document.getElementById('unit-no').value = '';
-    document.getElementById('unit-name').value = '';
-    document.getElementById('unit-phone').value = '';
-    document.getElementById('unit-area').value = '';
-    document.getElementById('unit-people').value = '';
-    alert('واحد با موفقیت ثبت شد.');
-  }
-
-  function deleteUnit(i) {
-    if(confirm('آیا از حذف این واحد اطمینان دارید؟')) {
-      db.units.splice(i, 1);
-      saveDB();
-    }
-  }
-
-  function addPaymentQuick() {
-    const idx = document.getElementById('quick-unit').value;
-    const amount = Number(document.getElementById('quick-pay-amount').value);
-    if(idx === "" || !amount || amount <= 0) { alert('لطفاً واحد و مبلغ صحیح را وارد کنید.'); return; }
-
-    db.units[idx].debt = Math.max(0, (db.units[idx].debt || 0) - amount);
-    db.balance = (db.balance || 0) + amount;
-    saveDB();
-    document.getElementById('quick-pay-amount').value = '';
-    document.getElementById('quick-pay-desc').value = '';
-    alert('واریزی ثبت و از بدهی واحد کسر شد.');
-  }
-
-  function addExpense() {
-    const title = document.getElementById('exp-title').value.trim();
-    const amount = Number(document.getElementById('exp-amount').value);
-    const date = document.getElementById('exp-date').value.trim();
-    if(!title || !amount) { alert('لطفاً عنوان و مبلغ هزینه را وارد کنید.'); return; }
-
-    db.expenses.unshift({ title, amount, date });
-    db.balance = (db.balance || 0) - amount;
-    saveDB();
-    document.getElementById('exp-title').value = '';
-    document.getElementById('exp-amount').value = '';
-    document.getElementById('exp-date').value = '';
-    alert('هزینه ثبت شد.');
-  }
-
-  function deleteExpense(i) {
-    if(confirm('حذف این هزینه؟')) {
-      db.balance += Number(db.expenses[i].amount);
-      db.expenses.splice(i, 1);
-      saveDB();
-    }
-  }
-
-  function toggleChargeInputs() {
-    const type = document.getElementById('charge-type').value;
-    document.getElementById('charge-fixed-box').style.display = type === 'fixed' ? 'block' : 'none';
-    document.getElementById('charge-variable-box').style.display = type !== 'fixed' ? 'block' : 'none';
-  }
-
-  function applyMonthlyCharge() {
-    if(db.units.length === 0) { alert('ابتدا واحدها را تعریف کنید.'); return; }
-    const type = document.getElementById('charge-type').value;
-    const fixedVal = Number(document.getElementById('charge-fixed-val').value) || 0;
-    const rateVal = Number(document.getElementById('charge-rate-val').value) || 0;
-
-    db.units.forEach(u => {
-      let charge = 0;
-      if(type === 'fixed') charge = fixedVal;
-      else if(type === 'area') charge = (Number(u.area) || 0) * rateVal;
-      else if(type === 'people') charge = (Number(u.people) || 1) * rateVal;
-      u.debt = (u.debt || 0) + charge;
-    });
-
-    saveDB();
-    alert('شارژ این ماه برای تمام واحدها محاسبه و اضافه شد.');
-  }
-
-  function generateSmsText() {
-    const idx = document.getElementById('sms-unit-select').value;
-    const txtArea = document.getElementById('sms-text');
-    if(idx === "" || !db.units[idx]) { txtArea.value = ''; return; }
-    const u = db.units[idx];
-    txtArea.value = `سلام جناب/سرکار ${u.name} گرامی (${u.no})\nبدهی شارژ ساختمان شما تا این تاریخ: ${formatPrice(u.debt || 0)} تومان می‌باشد.\nلطفاً پس از واریز، شماره پیگیری را به مدیر ساختمان ارسال فرمایید. با تشکر.`;
-  }
-
-  function copySmsText() {
-    const txt = document.getElementById('sms-text');
-    txt.select();
-    document.execCommand('copy');
-    alert('متن پیامک کپی شد!');
-  }
-
-  function switchTab(tab) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('view-' + tab).classList.add('active');
-    event.currentTarget.classList.add('active');
-  }
-
-  function formatPrice(n) {
-    return Number(n || 0).toLocaleString('fa-IR');
-  }
-
-  function exportData() {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
-    const a = document.createElement('a');
-    a.setAttribute("href", dataStr);
-    a.setAttribute("download", "charge_yar_backup.json");
-    a.click();
-  }
-
-  function clearAllData() {
-    if(confirm('آیا از حذف تمام اطلاعات و شروع مجدد مطمئن هستید؟')) {
-      localStorage.removeItem('charge_yar_data');
-      db = { units: [], expenses: [], balance: 0 };
-      renderAll();
-    }
-  }
-
-  init();
-</script>
+    </div>
 
 </body>
 </html>
