@@ -3,77 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شارژ یار - مدیریت شارژ ساختمان</title>
-    <!-- فونت استاندارد وزیرمتن برای اتصال صحیح حروف فارسی -->
+    <title>شارژ یار - مدیریت هوشمند شارژ ساختمان</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
-        body {
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
-            background-color: #f4f6f8;
-            color: #333;
+        :root {
+            --bg-color: #062319;
+            --card-bg: #0b3528;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #ffffff;
+            --text-muted: #b0c4b1;
+        }
+        * {
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 16px;
             direction: rtl;
-            text-align: right;
         }
         .container {
-            max-width: 600px;
+            max-width: 480px;
             margin: 0 auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #082618;
+        header {
             text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 20px;
+        }
+        header h1 {
+            color: var(--gold);
             font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
         }
-        p {
-            line-height: 1.6;
+        header p {
+            color: var(--text-muted);
+            font-size: 13px;
         }
-        .myket-box {
-            margin-top: 30px;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 16px;
             text-align: center;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            border: 1px solid #ddd;
         }
-        .btn-myket {
-            display: block;
-            padding: 15px;
-            background: #d4af37;
-            color: #082618;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
+        .stat-card h3 {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 6px;
         }
-        .btn-dev {
-            display: block;
-            padding: 15px;
-            background: #082618;
-            color: #d4af37;
-            border-radius: 10px;
-            text-decoration: none;
+        .stat-card .value {
+            color: var(--gold-light);
+            font-size: 18px;
             font-weight: bold;
+        }
+        .section-title {
+            color: var(--gold);
             font-size: 16px;
-            border: 1px solid #d4af37;
+            margin: 20px 0 10px 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .unit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .unit-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .unit-info h4 {
+            font-size: 14px;
+            color: var(--text-main);
+            margin-bottom: 3px;
+        }
+        .unit-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge.paid {
+            background: rgba(40, 167, 69, 0.2);
+            color: #4cd964;
+            border: 1px solid #4cd964;
+        }
+        .badge.unpaid {
+            background: rgba(220, 53, 69, 0.2);
+            color: #ff5252;
+            border: 1px solid #ff5252;
+        }
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 30px;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: #062319;
+        }
+        .btn-dark {
+            background: var(--card-bg);
+            color: var(--gold);
+            border: 1px solid var(--gold);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>سامانه مدیریت شارژ ساختمان (شارژ یار)</h1>
-        <p>با استفاده از این اپلیکیشن می‌توانید به راحتی هزینه‌ها و شارژ واحدهای ساختمان را مدیریت و پیگیری کنید.</p>
-        
-        <!-- بخش دکمه‌های الزامی مایکت -->
-        <div class="myket-box">
-            <a href="myket://comment?id=co.median.android.rdamaak" class="btn-myket">⭐ ثبت نظر و امتیاز در مایکت</a>
-            <a href="myket://developer/seyedmehdidaavi@gmail.com" class="btn-dev">📂 سایر برنامه‌های من</a>
+        <header>
+            <h1>شارژ یار</h1>
+            <p>سامانه جامع مدیریت هوشمند شارژ و هزینه‌های ساختمان</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>موجودی صندوق ساختمان</h3>
+                <div class="value">۱۲,۴۵۰,۰۰۰ تومان</div>
+            </div>
+            <div class="stat-card">
+                <h3>واحدهای تسویه شده</h3>
+                <div class="value">۸ از ۱۰ واحد</div>
+            </div>
+        </div>
+
+        <div class="section-title">🏢 وضعیت پرداخت شارژ واحدها</div>
+        <div class="unit-list">
+            <div class="unit-item">
+                <div class="unit-info">
+                    <h4>واحد ۱۰۱ (طبقه اول)</h4>
+                    <span>مبلغ: ۷۵۰,۰۰۰ تومان</span>
+                </div>
+                <span class="badge paid">پرداخت شده</span>
+            </div>
+            <div class="unit-item">
+                <div class="unit-info">
+                    <h4>واحد ۱۰۲ (طبقه اول)</h4>
+                    <span>مبلغ: ۷۵۰,۰۰۰ تومان</span>
+                </div>
+                <span class="badge paid">پرداخت شده</span>
+            </div>
+            <div class="unit-item">
+                <div class="unit-info">
+                    <h4>واحد ۲۰۱ (طبقه دوم)</h4>
+                    <span>مبلغ: ۷۵۰,۰۰۰ تومان</span>
+                </div>
+                <span class="badge unpaid">معوق / بدهکار</span>
+            </div>
+            <div class="unit-item">
+                <div class="unit-info">
+                    <h4>واحد ۲۰۲ (طبقه دوم)</h4>
+                    <span>مبلغ: ۷۵۰,۰۰۰ تومان</span>
+                </div>
+                <span class="badge paid">پرداخت شده</span>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-gold" onclick="alert('امکان ثبت هزینه جدید و صدور قبض شارژ فعال است.')">+ ثبت هزینه یا شارژ جدید</button>
+            <a href="https://myket.ir" target="_blank" class="btn btn-dark">⭐ ثبت نظر و امتیاز در مایکت</a>
+            <a href="https://seyedmehdi-davavi.github.io/" target="_blank" class="btn btn-dark">📁 سایر برنامه‌های من</a>
         </div>
     </div>
 
